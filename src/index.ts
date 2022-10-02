@@ -1,5 +1,5 @@
-import { Events } from "../types/events"
-import { Replies } from "../types/replies"
+import { Events } from "./types/events"
+import { Replies } from "./types/replies"
 import NotionAPI from "./notion-api"
 
 /**
