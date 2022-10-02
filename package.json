@@ -1,0 +1,14 @@
+{
+  "name": "react-to-task",
+  "version": "1.0.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {},
+  "dependencies": {
+    "@notionhq/client": "^2.2.0",
+    "wrangler": "^2.1.9"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^3.16.0"
+  }
+}
