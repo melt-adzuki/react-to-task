@@ -1,6 +1,6 @@
 import { Events } from "./types/events"
-import { Replies } from "./types/replies"
-import NotionAPI from "./notion-api"
+import handleEvent from "./handlers"
+import fail from "./utils/fail"
 
 /**
  * Welcome to Cloudflare Workers! This is your first worker.
@@ -31,51 +31,13 @@ export default {
 	async fetch(
 		request: Request,
 		env: Env,
-		ctx: ExecutionContext
+		_ctx: ExecutionContext
 	): Promise<Response> {
 		if (!request.headers.get("content-type")?.startsWith("application/json")) {
 			return fail("Content-Type must be application/json")
 		}
 
 		const body = await request.json() as Events
-
-		switch (body.type) {
-			case "url_verification":
-				return new Response(body.challenge)
-			
-			case "event_callback": {
-				const { event } = body
-
-				switch (event.type) {
-					case "reaction_added": {
-						const replies = await fetch(
-							`https://slack.com/api/conversations.history?channel=${event.item.channel}&oldest=${event.item.ts}&inclusive=true&limit=1`,
-							{
-								headers: {
-									"Authorization": `Bearer ${env.SLACK_TOKEN}`,
-								},
-							},
-						).then(response => response.json()) as Replies
-
-						const notion = new NotionAPI(env.NOTION_TOKEN, env.NOTION_DATABASE_ID)
-						await notion.addItem(replies.messages[0].text, "https://example.com")
-						
-						console.log(JSON.stringify(replies))
-						return new Response("OK")
-					}
-						
-					default:
-						return fail("Invalid callback event type: " + event.type)
-				}
-			}
-				
-			default:
-				return fail("Invalid event type: " + body.type)
-		}
+		return handleEvent(body, env)
 	}
-}
-
-function fail(reason: string) {
-	console.log("Error: " + reason)
-	return new Response(reason, { status: 400 })
 }
