@@ -1,7 +1,7 @@
 import { Client } from "@notionhq/client"
 
 export default class NotionAPI {
-	notion: Client
+	private readonly notion: Client
 
 	constructor(notionToken: string, private notionDatabaseId: string) {
 		this.notion = new Client({ auth: notionToken })
