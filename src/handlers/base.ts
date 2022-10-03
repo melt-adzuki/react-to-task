@@ -1,9 +1,9 @@
-import { Env } from ".."
+import { Env } from "..";
 import { Events } from "../types/events"
 
-export default abstract class Event<T> {
+export default abstract class EventCallback<T> {
     constructor(
-        protected body: Extract<Events, { type: T }>,
+        protected event: Extract<Extract<Events, { type: "event_callback" }>["event"], { type: T }>,
         protected env: Env,
     ) { }
 

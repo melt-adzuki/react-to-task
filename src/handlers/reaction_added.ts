@@ -1,5 +1,5 @@
-import NotionAPI from "../../notion-api"
-import { Replies } from "../../types/replies"
+import NotionAPI from "../notion-api"
+import { Replies } from "../types/replies"
 import EventCallback from "./base"
 
 export default class ReactionAdded extends EventCallback<"reaction_added"> {
