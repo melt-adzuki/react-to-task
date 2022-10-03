@@ -22,7 +22,7 @@ export interface Env {
 	// Example binding to R2. Learn more at https://developers.cloudflare.com/workers/runtime-apis/r2/
 	// MY_BUCKET: R2Bucket;
 
-	SLACK_TOKEN: string
+	SLACK_BOT_TOKEN: string
 	NOTION_TOKEN: string
 	NOTION_DATABASE_ID: string
 }
@@ -37,7 +37,12 @@ export default {
 			return fail("Content-Type must be application/json")
 		}
 
-		const body = await request.json() as Events
+		const body = await request.json() as Events | undefined
+
+		if (!body || !body.type) {
+			return fail("Invalid request")
+		}
+
 		return handleEvent(body, env)
 	}
 }
