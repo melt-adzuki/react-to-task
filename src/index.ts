@@ -1,6 +1,6 @@
 import { Events } from "./types/events"
 import handleEvent from "./handlers"
-import fail from "./utils/fail"
+import ResponseProvider from "./utils/response-provider"
 
 /**
  * Welcome to Cloudflare Workers! This is your first worker.
@@ -34,15 +34,15 @@ export default {
 		_ctx: ExecutionContext
 	): Promise<Response> {
 		if (!request.headers.get("content-type")?.startsWith("application/json")) {
-			return fail("Content-Type must be application/json")
+			return ResponseProvider.fail("Content-Type must be application/json").makeResponse()
 		}
 
 		const body = await request.json() as Events | undefined
 
 		if (!body || !body.type) {
-			return fail("Invalid request")
+			return ResponseProvider.fail("Invalid request").makeResponse()
 		}
 
-		return handleEvent(body, env)
+		return handleEvent(body, env).then(provider => provider.makeResponse())
 	}
 }

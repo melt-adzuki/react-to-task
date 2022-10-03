@@ -23,7 +23,5 @@ export default class NotionAPI {
 				}
 			},
 		})
-
-		console.log("Success! Entry added.")
 	}
 }

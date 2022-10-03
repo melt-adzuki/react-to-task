@@ -1,14 +1,12 @@
 import { Env } from ".."
 import { Events } from "../types/events"
-import fail from "../utils/fail"
+import ResponseProvider from "../utils/response-provider"
 import EventCallback from "./base"
 import ReactionAdded from "./reaction_added"
 
-export default function handleEvent(body: Events, env: Env): Promise<Response> {
+export default async function handleEvent(body: Events, env: Env): Promise<ResponseProvider> {
     if (body.type === "url_verification") {
-        return new Promise(resolve => {
-            resolve(new Response(body.challenge))
-        })
+        return ResponseProvider.custom("Successfully verified URL.", body.challenge, 200)
     }
     
     else if (body.type === "event_callback") {
@@ -22,6 +20,6 @@ export default function handleEvent(body: Events, env: Env): Promise<Response> {
     }
     
     else {
-        return fail("Unknown event type: " + (body as { type: string }).type)
+        return ResponseProvider.fail("Unknown event type: " + (body as { type: string }).type)
     }
 }
