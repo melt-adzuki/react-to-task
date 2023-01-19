@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
+  "packageManager": "pnpm@7.25.0",
   "scripts": {},
   "dependencies": {
     "@notionhq/client": "^2.2.0",
