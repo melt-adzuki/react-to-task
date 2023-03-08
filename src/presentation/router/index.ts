@@ -1,19 +1,18 @@
-import { Env } from ".."
-import { Events } from "../types/events"
-import ResponseProvider from "../utils/response-provider"
-import EventCallback from "./base"
-import ReactionAdded from "./reaction_added"
+import EventBody from "../types/EventBody"
+import ResponseProvider from "../../ResponseProvider"
+import EventCallback from "./EventCallback"
+import ReactionAdded from "./ReactionAdded"
 
-export default async function handleEvent(body: Events, env: Env): Promise<ResponseProvider> {
+export default async function handleEvent(body: EventBody): Promise<ResponseProvider> {
     if (body.type === "url_verification") {
         return ResponseProvider.custom("Successfully verified URL.", body.challenge, 200)
     }
     
     else if (body.type === "event_callback") {
-        type CallbackTypes = Extract<Events, { type: "event_callback" }>["event"]["type"]
+        type CallbackTypes = Extract<EventBody, { type: "event_callback" }>["event"]["type"]
 
         const handlers: { [K in CallbackTypes]: EventCallback<K> } = {
-            "reaction_added": new ReactionAdded(body.event, env),
+            "reaction_added": new ReactionAdded(body.event),
         }
             
         return handlers[body.event.type].handle()

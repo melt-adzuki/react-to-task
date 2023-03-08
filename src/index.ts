@@ -1,6 +1,12 @@
-import { Events } from "./types/events"
-import handleEvent from "./handlers"
-import ResponseProvider from "./utils/response-provider"
+import "reflect-metadata"
+import EventBody from "./presentation/types/EventBody"
+import handleEvent from "./presentation/router"
+import ResponseProvider from "./ResponseProvider"
+import { container } from "tsyringe"
+import NotionTaskRepository from "./infrastructure/repositories/NotionTaskRepository"
+import config, { Env } from "./config"
+
+container.register("TaskRepository", { useClass: NotionTaskRepository })
 
 /**
  * Welcome to Cloudflare Workers! This is your first worker.
@@ -12,37 +18,24 @@ import ResponseProvider from "./utils/response-provider"
  * Learn more at https://developers.cloudflare.com/workers/
  */
 
-export interface Env {
-	// Example binding to KV. Learn more at https://developers.cloudflare.com/workers/runtime-apis/kv/
-	// MY_KV_NAMESPACE: KVNamespace;
-	//
-	// Example binding to Durable Object. Learn more at https://developers.cloudflare.com/workers/runtime-apis/durable-objects/
-	// MY_DURABLE_OBJECT: DurableObjectNamespace;
-	//
-	// Example binding to R2. Learn more at https://developers.cloudflare.com/workers/runtime-apis/r2/
-	// MY_BUCKET: R2Bucket;
-
-	SLACK_BOT_TOKEN: string
-	NOTION_TOKEN: string
-	NOTION_DATABASE_ID: string
-}
-
 export default {
 	async fetch(
 		request: Request,
 		env: Env,
 		_ctx: ExecutionContext
 	): Promise<Response> {
+		config.init(env)
+		
 		if (!request.headers.get("content-type")?.startsWith("application/json")) {
-			return ResponseProvider.fail("Content-Type must be application/json").makeResponse()
+			return ResponseProvider.fail("Content-Type must be application/json").fire()
 		}
 
-		const body = await request.json() as Events | undefined
+		const body = await request.json() as EventBody | undefined
 
 		if (!body || !body.type) {
-			return ResponseProvider.fail("Invalid request").makeResponse()
+			return ResponseProvider.fail("Invalid request").fire()
 		}
 
-		return handleEvent(body, env).then(provider => provider.makeResponse())
+		return handleEvent(body).then(provider => provider.fire())
 	}
 }

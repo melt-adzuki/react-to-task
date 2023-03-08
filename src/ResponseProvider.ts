@@ -18,7 +18,7 @@ export default class ResponseProvider {
 		return new this("custom", description, content, status)
 	}
 	
-	public makeResponse(): Response {
+	public fire(): Response {
 		if (this.condition === "success") {
 			const format = "[SUCCEEDED] " + this.description
 			

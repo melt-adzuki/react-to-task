@@ -1,4 +1,4 @@
-export type Replies = {
+type Replies = {
     ok: boolean
     messages: {
         type: "message"
@@ -19,3 +19,5 @@ export type Replies = {
         next_cursor: string
     }
 }
+
+export default Replies

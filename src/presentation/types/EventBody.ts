@@ -1,4 +1,4 @@
-export type Events = {
+type EventBody = {
     type: "url_verification"
     challenge: string
     token: string
@@ -17,3 +17,5 @@ export type Events = {
         }
     }
 }
+
+export default EventBody
