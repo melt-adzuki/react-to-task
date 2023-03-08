@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "license": "MIT",
   "private": true,
+  "packageManager": "pnpm@7.25.0",
   "scripts": {},
-  "dependencies": {
-    "@notionhq/client": "^2.2.0",
-    "wrangler": "^2.1.9"
-  },
   "devDependencies": {
-    "@cloudflare/workers-types": "^3.16.0"
+    "@cloudflare/workers-types": "^3.16.0",
+    "@notionhq/client": "^2.2.0",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.7.0",
+    "wrangler": "^2.1.9"
   }
 }
