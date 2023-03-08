@@ -1,7 +1,7 @@
 import ResponseProvider from "../../ResponseProvider"
 import EventCallback from "./EventCallback"
 import { container } from "tsyringe"
-import AddTaskService from "../../application/services/AddTask"
+import AddTaskService from "../../application/services/AddTaskService"
 import Message from "../models/Message"
 import WorkspaceUrl from "../models/WorkspaceUrl"
 
