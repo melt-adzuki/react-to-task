@@ -16,8 +16,6 @@ export default class ReactionAdded extends EventCallback<"reaction_added"> {
         const workspaceUrl = await WorkspaceUrl.fetch()
 
         const addTaskService = container.resolve(AddTaskService)
-        addTaskService.add(message.text, `https://${workspaceUrl.value}.slack.com/archives/${this.event.item.channel}/p${this.event.item.ts.replaceAll(".", "")}`)
-
-        return ResponseProvider.succeed("Added new item to Notion: " + message.text)
+        return addTaskService.add(message.text, `https://${workspaceUrl.value}.slack.com/archives/${this.event.item.channel}/p${this.event.item.ts.replaceAll(".", "")}`)
     }
 }
