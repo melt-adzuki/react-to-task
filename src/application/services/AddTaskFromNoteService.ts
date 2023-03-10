@@ -2,28 +2,28 @@ import Task from "../../domain/models/Task"
 import TaskRepository from "../../domain/repositories/TaskRepository"
 import { inject, singleton } from "tsyringe"
 import ResponseProvider from "../../ResponseProvider"
-import NoteRepository from "../../domain/repositories/MessageRepository"
+import NoteRepository from "../../domain/repositories/NoteRepository"
 
 @singleton()
-export default class AddTaskFromMessageService {
+export default class AddTaskFromNoteService {
     constructor(
         @inject("TaskRepository")
         private taskRepository: TaskRepository,
-        @inject("MessageRepository")
-        private messageRepository: NoteRepository
+        @inject("NoteRepository")
+        private noteRepository: NoteRepository
     ) { }
 
     async execute(id: string, channel: string): Promise<ResponseProvider> {
-        const message = await this.messageRepository.get(id, channel)
-        const url = await this.messageRepository.url(id, channel)
+        const note = await this.noteRepository.get(id, channel)
+        const url = await this.noteRepository.url(id, channel)
         
         const date = new Date
         date.setHours(date.getHours() + 9)
 
-        const task = new Task(message, date, url)
+        const task = new Task(note, date, url)
         const response = await this.taskRepository.add(task)
 
-        await this.messageRepository.reply(`タスクを追加しました💪\nURL: ${url}`, id, channel)
+        await this.noteRepository.reply("タスクを追加しました💪", id, channel)
         return response
     }
 }

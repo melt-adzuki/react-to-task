@@ -1,8 +1,8 @@
-import NoteRepository from "../../domain/repositories/MessageRepository"
+import NoteRepository from "../../domain/repositories/NoteRepository"
 import ResponseProvider from "../../ResponseProvider"
 import Slack from "../clients/Slack"
 
-export default class SlackMessageRepository implements NoteRepository {
+export default class SlackNoteRepository implements NoteRepository {
     async get(ts: string, channel: string) {
         const message = await Slack.getMessage({ ts, channel })
         return message.text

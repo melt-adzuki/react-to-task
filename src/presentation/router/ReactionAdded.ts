@@ -1,6 +1,6 @@
 import ResponseProvider from "../../ResponseProvider"
 import EventCallback from "./EventCallback"
-import AddTaskFromMessageService from "../../application/services/AddTaskFromMessageService"
+import AddTaskFromNoteService from "../../application/services/AddTaskFromNoteService"
 import config from "../../config"
 import container from "../../container"
 
@@ -10,7 +10,7 @@ export default class ReactionAdded extends EventCallback<"reaction_added"> {
             return ResponseProvider.succeed(`The reaction :${this.event.reaction}: is not the target.`)
         }
         
-        const addTaskFromMessageService = container.resolve(AddTaskFromMessageService)
-        return addTaskFromMessageService.execute(this.event.item.ts, this.event.item.channel)
+        const addTaskFromNoteService = container.resolve(AddTaskFromNoteService)
+        return addTaskFromNoteService.execute(this.event.item.ts, this.event.item.channel)
     }
 }

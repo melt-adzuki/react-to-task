@@ -1,8 +1,8 @@
 import { container } from "tsyringe"
 import NotionTaskRepository from "./infrastructure/repositories/NotionTaskRepository"
-import SlackMessageRepository from "./infrastructure/repositories/SlackMessageRepository"
+import SlackNoteRepository from "./infrastructure/repositories/SlackNoteRepository"
 
 container.register("TaskRepository", { useClass: NotionTaskRepository })
-container.register("MessageRepository", { useClass: SlackMessageRepository })
+container.register("NoteRepository", { useClass: SlackNoteRepository })
 
 export default container
