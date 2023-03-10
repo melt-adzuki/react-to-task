@@ -7,7 +7,7 @@ export default async function handleEvent(body: EventBody): Promise<ResponseProv
     if (body.type === "url_verification") {
         return ResponseProvider.custom("Successfully verified URL.", body.challenge, 200)
     }
-    
+
     else if (body.type === "event_callback") {
         type CallbackTypes = Extract<EventBody, { type: "event_callback" }>["event"]["type"]
 
