@@ -3,6 +3,7 @@ Slackで特定のチャンネル上の投稿にリアクションが来たとき
 
 # env
 ```
+SLACK_REACTION=
 NOTION_DATABASE_ID=
 SLACK_BOT_TOKEN=
 NOTION_TOKEN=
