@@ -17,7 +17,7 @@ const Slack = {
         return workspaceUrl
     },
 
-    async getMessage(ts: string, channel: string) {
+    async getMessage({ ts, channel }: { ts: string, channel: string }) {
         const ENDPOINT = "https://slack.com/api/conversations.history"
 
         const message = await fetch(
@@ -33,17 +33,13 @@ const Slack = {
         return message
     },
 
-    async postMessage(thread_ts: string, channel: string, text: string) {
+    async postMessage(body: { thread_ts?: string, channel: string, text: string }) {
         const ENDPOINT = "https://slack.com/api/chat.postMessage"
 
         await fetch(ENDPOINT,
             {
                 method: "POST",
-                body: JSON.stringify({
-                    channel,
-                    text,
-                    thread_ts,
-                }),
+                body: JSON.stringify(body),
                 headers: {
                     "Authorization": `Bearer ${config.SLACK_BOT_TOKEN}`,
                     "Content-Type": "application/json",

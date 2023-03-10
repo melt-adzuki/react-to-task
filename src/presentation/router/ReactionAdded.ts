@@ -1,8 +1,8 @@
 import ResponseProvider from "../../ResponseProvider"
 import EventCallback from "./EventCallback"
-import { container } from "tsyringe"
 import AddTaskFromMessageService from "../../application/services/AddTaskFromMessageService"
 import config from "../../config"
+import container from "../../container"
 
 export default class ReactionAdded extends EventCallback<"reaction_added"> {
     async handle(): Promise<ResponseProvider> {

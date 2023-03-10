@@ -2,11 +2,7 @@ import "reflect-metadata"
 import EventBody from "./presentation/types/EventBody"
 import handleEvent from "./presentation/router"
 import ResponseProvider from "./ResponseProvider"
-import { container } from "tsyringe"
-import NotionTaskRepository from "./infrastructure/repositories/NotionTaskRepository"
 import config, { Env } from "./config"
-
-container.register("TaskRepository", { useClass: NotionTaskRepository })
 
 /**
  * Welcome to Cloudflare Workers! This is your first worker.
