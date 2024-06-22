@@ -4,11 +4,11 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
-    "@cloudflare/workers-types": "^3.16.0",
-    "@notionhq/client": "^2.2.0",
-    "reflect-metadata": "^0.1.13",
-    "tsyringe": "^4.7.0",
-    "wrangler": "^2.1.9"
+    "@cloudflare/workers-types": "^4.20240620.0",
+    "@notionhq/client": "^2.2.15",
+    "reflect-metadata": "^0.2.2",
+    "tsyringe": "^4.8.0",
+    "wrangler": "^3.61.0"
   },
-  "packageManager": "yarn@1.22.19"
+  "packageManager": "yarn@1.22.22+sha256.c17d3797fb9a9115bf375e31bfd30058cac6bc9c3b8807a3d8cb2094794b51ca"
 }
